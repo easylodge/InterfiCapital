@@ -3,7 +3,7 @@ require "base64"
 module InterfiCapital
   class Origination
     def initialize(api_key=nil, username=nil, password=nil)
-      @api_key = api_key || ENV['INTERFI_CAPITAL_API_KEY']
+      @api_key = api_key || ENV['INTERFI_CAPITAL_KEY']
       @username = username
       @password = password
     end
@@ -16,7 +16,7 @@ module InterfiCapital
     def create_loan(params)
       # populate the loan params into the expected structure and post it to the API
       data = {test: 'data'}
-      post_url = InterfiCapital::Configuration.url
+      post_url = InterfiCapital.configuration.url
       post(post_url, data)
     end
 
