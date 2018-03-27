@@ -1,5 +1,5 @@
 require 'interfi_capital/version'
-require 'interfi_capital/query'
+require 'interfi_capital/origination'
 require 'httparty'
 require 'interfi_capital/railtie' if defined?(Rails)
 require 'interfi_capital/configuration'

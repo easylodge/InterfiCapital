@@ -32,7 +32,7 @@ module InterfiCapital
             accept: :json,
             content_type: :json,
             Authorization: "Basic #{encoded_authorisation}",
-            'X-Interfi-Authorisation': @encoded_api_key
+            'X-Interfi-Authorisation': @encoded_api_key,
             params: data.to_json
           }
         )
