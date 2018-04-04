@@ -1,3 +1,3 @@
-class InterfiCapital::Dto::offset < InterfiCapital::Dto::Base
+class InterfiCapital::Dto::Offset < InterfiCapital::Dto::Base
 
 end
