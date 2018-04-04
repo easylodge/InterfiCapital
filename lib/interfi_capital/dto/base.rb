@@ -14,7 +14,37 @@ class InterfiCapital::Dto::Base #< OpenStruct
   end
 
   def to_json
-    # we might need to do some special magic to get the correct json structure
-    super
+    self.to_hash.to_json
   end
+
+  def to_hash
+    hash = {}
+    self.instance_variables.each do |var|
+      value = self.instance_variable_get var
+      if value.class.ancestors.include?(InterfiCapital::Dto::Base)
+        value.to_hash
+      elsif value.is_a?(Array)
+        converted = value.collect{|el|
+          if el.class.ancestors.include?(InterfiCapital::Dto::Base)
+            el.to_hash
+          else
+            el
+          end
+        }
+        hash[camel_case(var.to_s)] = converted
+        p converted
+      else
+        hash[camel_case(var.to_s)] = value
+      end
+    end
+    return hash
+  end
+
+  private
+
+  def camel_case(str)
+    return str if str !~ /_/ && str =~ /[A-Z]+.*/
+    str.tr('@','').split('_').map{|e| e.capitalize}.join
+  end
+
 end

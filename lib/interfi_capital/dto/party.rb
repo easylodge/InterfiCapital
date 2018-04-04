@@ -25,16 +25,16 @@ class InterfiCapital::Dto::Party < InterfiCapital::Dto::Base
   ASSOCIATION = %w(PrimaryApplicant AdditionalApplicant Guarantor Trust Trustee Originator MortgageManager Solicitor Valuer Other).freeze
 
   def detail_type=(value)
-    unless DETAIL_TYPE.includes?(value)
-      raise "The detail_type value must be one of #{DETAIL_TYPE.joins(', ')}"
+    unless DETAIL_TYPE.include?(value)
+      raise "The detail_type value must be one of #{DETAIL_TYPE.join(', ')}"
     else
       @detail_type = value
     end
   end
 
   def association=(value)
-    unless ASSOCIATION.includes?(value)
-      raise "The association value must be one of #{ASSOCIATION.joins(', ')}"
+    unless ASSOCIATION.include?(value)
+      raise "The association value must be one of #{ASSOCIATION.join(', ')}"
     else
       @association = value
     end
