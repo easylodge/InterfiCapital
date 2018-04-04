@@ -13,11 +13,8 @@ module InterfiCapital
       @encoded_api_key = Base64.encode64(@api_key)
     end
 
-    def create_loan(params)
-      # populate the loan params into the expected structure and post it to the API
-      data = {test: 'data'}
-      post_url = InterfiCapital.configuration.url
-      post(post_url, data)
+    def orignate(origination_base_dto)
+      post(InterfiCapital.configuration.url, origination_base_dto.to_json)
     end
 
     private
