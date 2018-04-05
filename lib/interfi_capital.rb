@@ -21,4 +21,22 @@ module InterfiCapital
   def self.configure
     yield(configuration)
   end
+
+  class InterfiCapital::ServerError < StandardError
+
+    def initialize(response=nil)
+      @response = response
+    end
+
+    attr_reader :response
+  end
+
+  class Configuration
+    attr_accessor :url, :api_key
+
+    def initialize(args = {})
+      @url = args[:url] || args['url']
+      @api_key = args[:api_key] || args['api_key']
+    end
+  end
 end

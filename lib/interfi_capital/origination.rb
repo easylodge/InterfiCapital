@@ -1,78 +1,62 @@
 require "base64"
+require 'rest-client'
 
-module InterfiCapital
-  class Origination
-    def initialize(api_key=nil, username=nil, password=nil)
-      @api_key = api_key || ENV['INTERFI_CAPITAL_KEY']
-      @username = username
-      @password = password
-    end
-
-    def encode_authentication
-      @encoded_authorisation = Base64.encode64("#{@username}:#{@password}")
-      @encoded_api_key = Base64.encode64(@api_key)
-    end
-
-    def orignate(origination_base_dto)
-      post(InterfiCapital.configuration.url, origination_base_dto.to_json)
-    end
-
-    private
-
-    def post(url, data = {})
-      result = nil
-      begin
-        response = RestClient::Request.execute(
-          method: :post,
-          url: "#{url}",
-          headers: {
-            accept: :json,
-            content_type: :json,
-            Authorization: "Basic #{encoded_authorisation}",
-            'X-Interfi-Authorisation': @encoded_api_key,
-            params: data.to_json
-          }
-        )
-        result = JSON.parse(response.body)
-
-        # TODO intercept the response and make ssense of it
-        # if(result['messages'])
-        #   server_rescue(result['messages'].first)
-        # end
-
-      rescue => e
-        http_rescue(e)
-      rescue JSON::ParserError => json_err
-        json_rescue(json_err, response)
-      end
-
-      return result
-    end
-
-    def self.http_rescue error
-      raise InterfiCapital::ServerError.new(error), "HTTP Code #{error.response['code']}: #{error.response['message']}"
-    end
-
-    def self.json_rescue error, response
-      raise InterfiCapital::ServerError.new(response) , "Invalid result data. Could not parse JSON response body \n #{error.message}"
-    end
+class InterfiCapital::Origination
+  def initialize(api_key=nil, username=nil, password=nil)
+    @api_key = api_key || ENV['INTERFI_CAPITAL_API_KEY']
+    @username = username || ENV['INTERFI_CAPITAL_USERNAME']
+    @password = password|| ENV['INTERFI_CAPITAL_PASSWORD']
   end
 
-  class InterfiCapital::ServerError < StandardError
-
-    def initialize(response=nil)
-      @response = response
-    end
-
-    attr_reader :response
+  def encode_authentication
+    @encoded_authorisation = Base64.encode64("#{@username}:#{@password}")
+    @encoded_api_key = Base64.encode64(@api_key)
   end
 
-  class Configuration
-    attr_accessor :url, :api_key
+  def originate(financial_application)
+    post(InterfiCapital.configuration.url, financial_application.to_hash)
+  end
 
-    def initialize(args = {})
-      @url = args[:url]
-      @api_key = args[:api_key]
+  private
+
+  def post(url, data = {})
+    result = nil
+    response = nil
+    begin
+      response = ::RestClient::Request.execute(
+        method: :post,
+        url: "#{url}",
+        verify_ssl: false,
+        headers: {
+          accept: :json,
+          content_type: :json,
+          Authorization: "Basic #{@encoded_authorisation}",
+          'X-Interfi-Authorisation': @encoded_api_key,
+          params: data.to_json
+        }
+      )
+      result = JSON.parse(response.body)
+
+      # TODO intercept the response and make ssense of it
+      # if(result['messages'])
+      #   server_rescue(result['messages'].first)
+      # end
+
+    rescue JSON::ParserError => json_err
+      json_rescue(json_err, response)
+    rescue RestClient::Exception => e
+      http_rescue(e)
     end
+
+    return result
+  end
+
+  def http_rescue(error)
+    raise InterfiCapital::ServerError.new(error.response), error.message
+  end
+
+  def json_rescue(error, response)
+    raise InterfiCapital::ServerError.new(response) , "Invalid result data. Could not parse JSON response body \n #{error.message}"
   end
 end
+
