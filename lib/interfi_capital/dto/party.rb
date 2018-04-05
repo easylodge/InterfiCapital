@@ -12,9 +12,9 @@ class InterfiCapital::Dto::Party < InterfiCapital::Dto::Base
   attr_accessor :post_settlement_residential_address_id
   attr_accessor :current_registered_address_id
   attr_accessor :post_settlement_registered_address_id
-  attr_accessor :currentTrading_address_id
+  attr_accessor :current_trading_address_id
   attr_accessor :post_settlement_trading_address_id
-  attr_accessor :currentMailing_address_id
+  attr_accessor :current_mailing_address_id
   attr_accessor :post_settlement_mailing_address_id
   attr_accessor :contact_details
   attr_accessor :employment_history
@@ -39,6 +39,8 @@ class InterfiCapital::Dto::Party < InterfiCapital::Dto::Base
       @association = value
     end
   end
+
+  # TODO: validate fields from reference data sets
 end
 
 

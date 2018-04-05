@@ -32,7 +32,6 @@ class InterfiCapital::Dto::Base #< OpenStruct
           end
         }
         hash[camel_case(var.to_s)] = converted
-        p converted
       else
         hash[camel_case(var.to_s)] = value
       end

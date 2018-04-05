@@ -16,3 +16,4 @@ class InterfiCapital::Dto::FinancialApplication < InterfiCapital::Dto::Base
   attr_accessor :approve, :settle
 
 end
+
