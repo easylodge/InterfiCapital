@@ -1,6 +1,9 @@
-# ruby -I . -I ./lib/ test.rb
+folder = File.expand_path('.',__dir__)
+$:.unshift(folder) unless $:.include?(folder)
+folder = File.expand_path('lib',__dir__)
+$:.unshift(folder) unless $:.include?(folder)
 
-load './lib/interfi_capital.rb'
+require 'interfi_capital'
 
 fa = InterfiCapital::Dto::FinancialApplication.new({
   user_id: 'example',
