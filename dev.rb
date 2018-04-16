@@ -57,6 +57,8 @@ fa.accounts = [account]
 
 puts fa.to_hash.to_yaml
 
+exit
+
 result = @req.originate(fa)
 
 puts result

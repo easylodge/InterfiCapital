@@ -12,35 +12,9 @@ class InterfiCapital::Dto::RateComponent < InterfiCapital::Dto::Base
   STOP_ON = %w(Default Maturity NumberOfMonths Date InterestOnlyExpiry FixedExpiry)
   COMPONENT_TYPE = %w(Variable Fixed Other)
 
-  def rate_type=(value)
-    unless RATE_TYPE.include?(value)
-      raise "The rate_type value must be one of #{RATE_TYPE.join(', ')}"
-    else
-      @rate_type = value
-    end
-  end
+  validate_reference_field(:rate_type)
+  validate_reference_field(:start_from)
+  validate_reference_field(:stop_on)
+  validate_reference_field(:component_type)
 
-  def start_from=(value)
-    unless START_FROM.include?(value)
-      raise "The start_from value must be one of #{START_FROM.join(', ')}"
-    else
-      @start_from = value
-    end
-  end
-
-  def stop_on=(value)
-    unless STOP_ON.include?(value)
-      raise "The stop_on value must be one of #{STOP_ON.join(', ')}"
-    else
-      @stop_on = value
-    end
-  end
-
-  def component_type=(value)
-    unless COMPONENT_TYPE.include?(value)
-      raise "The component_type value must be one of #{COMPONENT_TYPE.join(', ')}"
-    else
-      @component_type = value
-    end
-  end
 end
