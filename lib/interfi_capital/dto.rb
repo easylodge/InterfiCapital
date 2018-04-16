@@ -2,6 +2,7 @@ module InterfiCapital::Dto
   # Nothing much to do here yet, we use this as a logical grouping to map to the API, which refers to DTOs
 end
 
+require 'interfi_capital/dto/error'
 require 'interfi_capital/dto/base'
 require 'interfi_capital/dto/account'
 require 'interfi_capital/dto/address'
