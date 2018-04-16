@@ -42,7 +42,7 @@ class InterfiCapital::Dto::Base #< OpenStruct
     eval("values = #{self.name}::#{field.upcase}")
     define_method("#{field}=") do |value|
       unless values.include?(value)
-        raise "The #{field} must be one of #{values.join(', ')}"
+        raise InterfiCapital::Dto::ReferenceFieldValidationError.new("The #{field} must be one of #{values.join(', ')}")
       else
         eval("@#{field} = value")
       end

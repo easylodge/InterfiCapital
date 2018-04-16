@@ -1,4 +1,5 @@
 class InterfiCapital::Dto::IdentificationDocument < InterfiCapital::Dto::Base
+
   attr_accessor :identification_document_type
   attr_accessor :other_description
   attr_accessor :country_of_issue, :region_of_issue, :issue_date

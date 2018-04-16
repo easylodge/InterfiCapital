@@ -1,4 +1,5 @@
 class InterfiCapital::Dto::Employment < InterfiCapital::Dto::Base
+
   attr_accessor :employer, :employer_object_id, :employer_contact_person, :employer_contact_details
   attr_accessor :start_date, :term_in_months, :end_date
   attr_accessor :current, :income_id

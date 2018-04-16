@@ -1,6 +1,7 @@
 class InterfiCapital::Dto::Contact < InterfiCapital::Dto::Base
+
   attr_accessor :contact_method, :preferred_contact_time
-  attr_accessor :details, :verified,
+  attr_accessor :details, :verified
   attr_accessor :is_preferred, :is_expired
 
   CONTACT_METHOD = %w(HomeLandline WorkLandline PersonalMobilePhone BusinessMobilePhone PersonalFax BusinessFax Pager PersonalEmail BusinessEmail Website Twitter ).freeze

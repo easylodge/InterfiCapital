@@ -1,4 +1,5 @@
 class InterfiCapital::Dto::Address < InterfiCapital::Dto::Base
+
   attr_accessor :format
   attr_accessor :lot_number, :building_name, :floor, :unit
   attr_accessor :street_number, :street_name, :street_type

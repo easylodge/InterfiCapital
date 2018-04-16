@@ -1,4 +1,5 @@
 class InterfiCapital::Dto::DirectDebit < InterfiCapital::Dto::Base
+
   attr_accessor :repayment_calculation_frequency, :recurrence_frequency
   attr_accessor :starting_on, :amount
 

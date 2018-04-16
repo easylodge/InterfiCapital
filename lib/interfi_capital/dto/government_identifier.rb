@@ -1,4 +1,5 @@
 class InterfiCapital::Dto::GovernmentIdentifier < InterfiCapital::Dto::Base
+
   attr_accessor :identifier_type, :details
   attr_accessor :country_of_issue, :region_of_issue
 

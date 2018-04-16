@@ -1,4 +1,5 @@
 class InterfiCapital::Dto::Party < InterfiCapital::Dto::Base
+
   attr_accessor :detail_type
   attr_accessor :association, :association_other
   attr_accessor :title, :first_name, :middle_names, :last_name, :known_as, :salutation, :date_of_birth
