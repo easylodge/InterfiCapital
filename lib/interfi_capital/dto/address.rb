@@ -9,7 +9,7 @@ class InterfiCapital::Dto::Address < InterfiCapital::Dto::Base
   attr_accessor :express_document_source, :express_document_detail, :express_document_number
   attr_accessor :verified
 
-  FORMAT = %w(Formatted Unformatted PostalBox Express).freeze
+  FORMAT = ['Formatted', 'Unformatted', 'PostalBox', 'Express'].freeze
   STREET_TYPE = [
     'Street North', 'Avenue West', 'Road South', 'Road North', 'Avenue East', 'Street South',
     'Place North', 'Circuit', 'Street West', 'Access', 'Alley', 'Approach', 'Arcade', 'Artery', 'Avenue',
@@ -30,7 +30,7 @@ class InterfiCapital::Dto::Address < InterfiCapital::Dto::Base
     'Strand', 'Street', 'Strip', 'Subway', 'Tarn', 'Terrace', 'Throughway', 'Tollway', 'Top', 'Tor', 'Track',
     'Trail', 'Turn', 'Unerpass', 'Vale', 'Valley', 'View', 'Vista', 'Walk', 'Walkway', 'Way', 'Wharf', 'Wynd',
     'Road East', 'Road West', 'Street East'
-    ].freeze
+  ].freeze
 
   validate_reference_field(:format)
   validate_reference_field(:street_type)

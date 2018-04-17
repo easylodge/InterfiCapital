@@ -16,10 +16,10 @@ class InterfiCapital::Dto::PropertySecurity < InterfiCapital::Dto::Base
   attr_accessor :forced_sale_value
   attr_accessor :existing_mortgages
 
-  USAGE = %w(Residence Investment Commercial Other).freeze
-  TYPE = %w(House Unit Apartment VacantLand Townhouse Rural).freeze
-  TITLE_TYPE = %w(Freehold Leasehold Strata).freeze
-  ZONED = %w(Industrial Residential).freeze
+  USAGE = ['Residence', 'Investment', 'Commercial', 'Other'].freeze
+  TYPE = ['House', 'Unit', 'Apartment', 'VacantLand', 'Townhouse', 'Rural'].freeze
+  TITLE_TYPE = ['Freehold', 'Leasehold', 'Strata'].freeze
+  ZONED = ['Industrial', 'Residential'].freeze
 
   validate_reference_field(:usage)
   validate_reference_field(:type)

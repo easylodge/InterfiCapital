@@ -15,7 +15,7 @@ class InterfiCapital::Dto::FinancialApplication < InterfiCapital::Dto::Base
   attr_accessor :first_account_number
   attr_accessor :approve, :settle
 
-  DOCUMENTATION_LEVEL = %w(Full Alt Low None Unknown).freeze
+  DOCUMENTATION_LEVEL = ['Full', 'Alt', 'Low', 'None', 'Unknown'].freeze
 
   validate_reference_field(:documentation_level)
 end

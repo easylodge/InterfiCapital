@@ -22,10 +22,13 @@ class InterfiCapital::Dto::Party < InterfiCapital::Dto::Base
   attr_accessor :direct_debit_bank_account_id
   attr_accessor :tags
 
-  DETAIL_TYPE = %w(Individual Organisation).freeze
-  ASSOCIATION = %w(PrimaryApplicant AdditionalApplicant Guarantor Trust Trustee Originator MortgageManager Solicitor Valuer Other).freeze
-  TITLE = %w(Mr Mrs Miss Ms Dr Sir).freeze
-  GENDER = %w(Male Female Indeterminate Unknown).freeze
+  DETAIL_TYPE = ['Individual', 'Organisation'].freeze
+  ASSOCIATION = [
+    'PrimaryApplicant', 'AdditionalApplicant', 'Guarantor', 'Trust', 'Trustee', 'Originator',
+    'MortgageManager', 'Solicitor', 'Valuer', 'Other'
+  ].freeze
+  TITLE = ['Mr', 'Mrs', 'Miss', 'Ms', 'Dr', 'Sir'].freeze
+  GENDER = ['Male', 'Female', 'Indeterminate', 'Unknown'].freeze
   MARITAL_STATUS = [
     'Seperated', 'De facto', 'Married', 'Single', 'Divorced', 'Widowed', 'Domestic Partnership'
   ].freeze

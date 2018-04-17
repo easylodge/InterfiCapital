@@ -5,7 +5,7 @@ class InterfiCapital::Dto::MortgageInsurance < InterfiCapital::Dto::Base
   attr_accessor :policy_number, :approved_on, :effective_from, :effective_to
   attr_accessor :premium_paid, :comment
 
-  PURPOSE = %w(Origination FurtherAdvance).freeze
+  PURPOSE = ['Origination', 'FurtherAdvance'].freeze
 
   validate_reference_field(:purpose)
 end

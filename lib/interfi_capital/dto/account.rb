@@ -7,7 +7,7 @@ class InterfiCapital::Dto::Account < InterfiCapital::Dto::Base
   attr_accessor :principal_and_interest_instalment, :interest_only_instalment
   attr_accessor :rate_components, :tags, :repayments
 
-  INSTALMENT_FREQUENCY = %w(Once Weekly Fortnightly Monthly Annually).freeze
+  INSTALMENT_FREQUENCY = ['Once', 'Weekly', 'Fortnightly', 'Monthly', 'Annually'].freeze
 
   validate_reference_field(:instalment_frequency)
 

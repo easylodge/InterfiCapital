@@ -7,10 +7,10 @@ class InterfiCapital::Dto::RateComponent < InterfiCapital::Dto::Base
   attr_accessor :add_to_delivery_rate
   attr_accessor :component_type
 
-  RATE_TYPE = %w(ManagementFee)
-  START_FROM = %w(Default Settlement InterestOnlyExpiry FixedExpiry Date)
-  STOP_ON = %w(Default Maturity NumberOfMonths Date InterestOnlyExpiry FixedExpiry)
-  COMPONENT_TYPE = %w(Variable Fixed Other)
+  RATE_TYPE = ['ManagementFee'].freeze
+  START_FROM = ['Default', 'Settlement', 'InterestOnlyExpiry', 'FixedExpiry', 'Date'].freeze
+  STOP_ON = ['Default', 'Maturity', 'NumberOfMonths', 'Date', 'InterestOnlyExpiry', 'FixedExpiry'].freeze
+  COMPONENT_TYPE = ['Variable', 'Fixed', 'Other'].freeze
 
   validate_reference_field(:rate_type)
   validate_reference_field(:start_from)

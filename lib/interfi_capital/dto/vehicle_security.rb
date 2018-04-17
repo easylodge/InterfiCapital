@@ -11,7 +11,7 @@ class InterfiCapital::Dto::VehicleSecurity < InterfiCapital::Dto::Base
   attr_accessor :insurance_verified, :insurance_policy_number, :insured_amount
   attr_accessor :premium_amount, :pruchase_price, :estimated_value, :estimate_date
 
-  USAGE = %w(Personal Commercial).freeze
+  USAGE = ['Personal', 'Commercial'].freeze
 
   MAKE = [
     'Abarth', 'Alfa Romeo', 'Aston Martin', 'Audi', 'BMW', 'Chrysler', 'Citroen', 'Daewoo', 'Daihatsu',
@@ -50,8 +50,8 @@ class InterfiCapital::Dto::VehicleSecurity < InterfiCapital::Dto::Base
   ].freeze
 
   BODY_TYPE = [
-    'Hatch', 'Station Wagon', 'Truck', 'Motorcycle', 'Other', 'Tractor', 'Sports Utility Vehicle', 'Utility',
-    'Van', 'Coupe', 'Sedan', 'Tricycle'
+    'Hatch', 'Station Wagon', 'Truck', 'Motorcycle', 'Other', 'Tractor', 'Sports Utility Vehicle',
+    'Utility', 'Van', 'Coupe', 'Sedan', 'Tricycle'
   ].freeze
 
   TRANSMISSION = [
