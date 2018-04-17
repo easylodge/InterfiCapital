@@ -4,6 +4,7 @@ folder = File.expand_path('lib',__dir__)
 $:.unshift(folder) unless $:.include?(folder)
 
 require 'interfi_capital'
+require 'yaml'
 
 @config = YAML.load_file('dev_config.yml')
 @req = InterfiCapital::Origination.new(@config['api_key'], @config['username'], @config['password'])
@@ -57,10 +58,10 @@ fa.accounts = [account]
 
 puts fa.to_hash.to_yaml
 
-exit
 
 result = @req.originate(fa)
 
 puts result
 
+exit
 

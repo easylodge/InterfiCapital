@@ -1,5 +1,6 @@
 require "base64"
 require 'rest-client'
+require 'json'
 
 class InterfiCapital::Origination
   def initialize(api_key=nil, username=nil, password=nil)
@@ -35,16 +36,16 @@ class InterfiCapital::Origination
           params: data.to_json
         }
       )
-      result = JSON.parse(response.body)
+      result = ::JSON.parse(response.body)
 
-      # TODO intercept the response and make ssense of it
+      # TODO intercept the response and process it
       # if(result['messages'])
       #   server_rescue(result['messages'].first)
       # end
 
-    rescue JSON::ParserError => json_err
-      json_rescue(json_err, response)
-    rescue RestClient::Exception => e
+    rescue ::JSON::ParserError => e
+      json_rescue(e, response)
+    rescue ::RestClient::Exception => e
       http_rescue(e)
     end
 
