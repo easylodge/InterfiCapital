@@ -27,6 +27,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'faker'
 
-  spec.add_dependency "rest-client"
+  spec.add_dependency "faraday"
   spec.add_dependency 'activesupport'
 end

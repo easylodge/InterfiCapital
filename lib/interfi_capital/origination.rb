@@ -1,6 +1,8 @@
 require "base64"
-require 'rest-client'
+require 'faraday'
 require 'json'
+require 'active_support'
+require 'active_support/core_ext'
 
 class InterfiCapital::Origination
   def initialize(api_key=nil, username=nil, password=nil)
@@ -12,8 +14,8 @@ class InterfiCapital::Origination
 
   def encode_authentication
     valid_credentials?
-    @encoded_authorisation = Base64.encode64("#{@username}:#{@password}")
-    @encoded_api_key = Base64.encode64(@api_key)
+    @encoded_authorisation = Base64.encode64("#{@username}:#{@password}").strip
+    @encoded_api_key = Base64.encode64(@api_key).strip
   end
 
   def originate(financial_application)
@@ -25,31 +27,22 @@ class InterfiCapital::Origination
   def post(url, data = {})
     result = nil
     response = nil
-    # begin
-    response = ::RestClient::Request.execute(
-      method: :post,
-      url: "#{url}",
-      verify_ssl: false,
-      headers: {
-        accept: :json,
-        content_type: :json,
-        Authorization: "Basic #{@encoded_authorisation}",
-        'X-Interfi-Authorisation' => @encoded_api_key,
-        params: data.to_json
-      }
-    )
-    result = ::JSON.parse(response.body)
+    begin
+      response = post_connection(url).post do |req|
+        req.headers['Content-Type'] = 'application/json'
+        req.headers['Accept'] = 'application/json'
+        req.headers['Authorization'] = "Basic #{@encoded_authorisation}"
+        req.headers['X-Interfi-Authorisation'] = @encoded_api_key
+        req.body = data.to_json
+      end
 
-      # TODO intercept the response and process it
-      # if(result['messages'])
-      #   server_rescue(result['messages'].first)
-      # end
+      result = ::JSON.parse(response.body)
 
-    # rescue ::JSON::ParserError => e
-    #   json_rescue(e, response)
-    # rescue ::RestClient::Exception => e
-    #   http_rescue(e)
-    # end
+    rescue ::JSON::ParserError => e
+      json_rescue(e, response)
+    rescue ::RestClient::Exception => e
+      http_rescue(e)
+    end
 
     return result
   end
@@ -59,6 +52,14 @@ class InterfiCapital::Origination
     raise InterfiCapital::Dto::ValidationError.new("Please provide Username!") unless @username.present?
     raise InterfiCapital::Dto::ValidationError.new("Please provide Password!") unless @password.present?
     true
+  end
+
+  def post_connection(url)
+    Faraday.new(url: "#{url}", ssl: { verify: false } ) do |faraday|
+      faraday.request  :url_encoded
+      faraday.response :logger
+      faraday.adapter  Faraday.default_adapter
+    end
   end
 
   def http_rescue(error)
