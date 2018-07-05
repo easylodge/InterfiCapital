@@ -40,7 +40,7 @@ class InterfiCapital::Origination
 
     rescue ::JSON::ParserError => e
       json_rescue(e, response)
-    rescue ::RestClient::Exception => e
+    rescue ::Faraday::ClientError => e
       http_rescue(e)
     end
 
@@ -55,7 +55,7 @@ class InterfiCapital::Origination
   end
 
   def post_connection(url)
-    Faraday.new(url: "#{url}", ssl: { verify: false } ) do |faraday|
+    Faraday.new(url: URI("#{url}"), ssl: { verify: false } ) do |faraday|
       faraday.request  :url_encoded
       faraday.response :logger
       faraday.adapter  Faraday.default_adapter
