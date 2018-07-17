@@ -1,6 +1,6 @@
 class InterfiCapital::Dto::RateComponent < InterfiCapital::Dto::Base
 
-  attr_accessor :rate_type, :rate_class_code
+  attr_accessor :rate_type, :rate_class_code , :rate, :override_rate, :is_new
   attr_accessor :start_from, :stop_on
   attr_accessor :effective_from, :effective_to
   attr_accessor :number_of_months

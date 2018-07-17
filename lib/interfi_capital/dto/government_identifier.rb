@@ -1,6 +1,6 @@
 class InterfiCapital::Dto::GovernmentIdentifier < InterfiCapital::Dto::Base
 
-  attr_accessor :identifier_type, :details
+  attr_accessor :identifier_type, :details, :is_new
   attr_accessor :country_of_issue, :region_of_issue
 
   IDENTIFIER_TYPE = ['VolumeNumber', 'FolioNumber', 'LpdpNumber'].freeze
