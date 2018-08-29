@@ -1,6 +1,6 @@
 class InterfiCapital::Dto::PropertySecurity < InterfiCapital::Dto::Base
 
-  attr_accessor :addresses
+  attr_accessor :address_id
   attr_accessor :usage, :other_usage_description
   attr_accessor :property_usage_id, :property_usage_description
   attr_accessor :type, :property_type_id, :property_type_description
