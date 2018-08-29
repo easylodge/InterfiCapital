@@ -3,6 +3,7 @@ require 'faraday'
 require 'json'
 require 'active_support'
 require 'active_support/core_ext'
+require 'interfi_capital/result'
 
 class InterfiCapital::Origination
   def initialize(api_key=nil, username=nil, password=nil)
@@ -19,7 +20,8 @@ class InterfiCapital::Origination
   end
 
   def originate(financial_application)
-    post(InterfiCapital.configuration.url, financial_application.to_hash)
+    response = post(InterfiCapital.configuration.url, financial_application.to_hash)
+    InterfiCapital::Result.new(response)
   end
 
   private

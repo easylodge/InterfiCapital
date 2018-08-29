@@ -6,7 +6,7 @@ class InterfiCapital::Dto::Base #< OpenStruct
   def initialize(args={})
     super()
     if args.is_a?(Hash)
-      @object_id = args[:object_id] || nil
+      @object_id = args[:object_id] || (self.is_a?(InterfiCapital::Dto::FinancialApplication) || self.is_a?(InterfiCapital::Dto::PropertySecurity) ? nil : SecureRandom.uuid)
       @user_id = args[:user_id] || nil
       @code = args[:code] || nil
       @is_new = args[:code] || true
