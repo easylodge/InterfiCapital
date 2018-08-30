@@ -12,8 +12,8 @@ class InterfiCapital::Dto::PropertySecurity < InterfiCapital::Dto::Base
   attr_accessor :insured_amount, :premium_amount
   attr_accessor :government_identifiers
   attr_accessor :valuation_type, :valuation_date, :valuer, :valuation_amount
-  attr_accessor :insureable_value, :rental_income, :valuation_amount_high, :valuation_amount_low
-  attr_accessor :forced_sale_value
+  attr_accessor :insurable_value, :rental_income, :valuation_amount_high, :valuation_amount_low
+  attr_accessor :forced_sale_value, :is_new
   attr_accessor :existing_mortgages
 
   USAGE = ['Residence', 'Investment', 'Commercial', 'Other'].freeze

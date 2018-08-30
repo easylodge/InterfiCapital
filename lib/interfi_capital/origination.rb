@@ -1,21 +1,27 @@
 require "base64"
-require 'rest-client'
+require 'faraday'
 require 'json'
+require 'active_support'
+require 'active_support/core_ext'
+require 'interfi_capital/result'
 
 class InterfiCapital::Origination
   def initialize(api_key=nil, username=nil, password=nil)
     @api_key = api_key || ENV['INTERFI_CAPITAL_API_KEY']
     @username = username || ENV['INTERFI_CAPITAL_USERNAME']
     @password = password|| ENV['INTERFI_CAPITAL_PASSWORD']
+    encode_authentication
   end
 
   def encode_authentication
-    @encoded_authorisation = Base64.encode64("#{@username}:#{@password}")
-    @encoded_api_key = Base64.encode64(@api_key)
+    valid_credentials?
+    @encoded_authorisation = Base64.encode64("#{@username}:#{@password}").strip
+    @encoded_api_key = Base64.encode64(@api_key).strip
   end
 
   def originate(financial_application)
-    post(InterfiCapital.configuration.url, financial_application.to_hash)
+    response = post(InterfiCapital.configuration.url, financial_application.to_hash)
+    InterfiCapital::Result.new(response)
   end
 
   private
@@ -24,32 +30,38 @@ class InterfiCapital::Origination
     result = nil
     response = nil
     begin
-      response = ::RestClient::Request.execute(
-        method: :post,
-        url: "#{url}",
-        verify_ssl: false,
-        headers: {
-          accept: :json,
-          content_type: :json,
-          Authorization: "Basic #{@encoded_authorisation}",
-          'X-Interfi-Authorisation': @encoded_api_key,
-          params: data.to_json
-        }
-      )
-      result = ::JSON.parse(response.body)
+      response = post_connection(url).post do |req|
+        req.headers['Content-Type'] = 'application/json'
+        req.headers['Accept'] = 'application/json'
+        req.headers['Authorization'] = "Basic #{@encoded_authorisation}"
+        req.headers['X-Interfi-Authorisation'] = @encoded_api_key
+        req.body = data.to_json
+      end
 
-      # TODO intercept the response and process it
-      # if(result['messages'])
-      #   server_rescue(result['messages'].first)
-      # end
+      result = ::JSON.parse(response.body)
 
     rescue ::JSON::ParserError => e
       json_rescue(e, response)
-    rescue ::RestClient::Exception => e
+    rescue ::Faraday::ClientError => e
       http_rescue(e)
     end
 
     return result
+  end
+
+  def valid_credentials?
+    raise InterfiCapital::Dto::ValidationError.new("Please provide API key!") unless @api_key.present?
+    raise InterfiCapital::Dto::ValidationError.new("Please provide Username!") unless @username.present?
+    raise InterfiCapital::Dto::ValidationError.new("Please provide Password!") unless @password.present?
+    true
+  end
+
+  def post_connection(url)
+    Faraday.new(url: URI("#{url}"), ssl: { verify: false } ) do |faraday|
+      faraday.request  :url_encoded
+      faraday.response :logger
+      faraday.adapter  Faraday.default_adapter
+    end
   end
 
   def http_rescue(error)
