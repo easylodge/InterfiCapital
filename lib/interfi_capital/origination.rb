@@ -6,10 +6,10 @@ require 'active_support/core_ext'
 require 'interfi_capital/result'
 
 class InterfiCapital::Origination
-  def initialize(api_key=nil, username=nil, password=nil)
-    @api_key = api_key || ENV['INTERFI_CAPITAL_API_KEY']
-    @username = username || ENV['INTERFI_CAPITAL_USERNAME']
-    @password = password|| ENV['INTERFI_CAPITAL_PASSWORD']
+  def initialize(args = {})
+    @api_key = args[:api_key] || ENV['INTERFI_CAPITAL_API_KEY']
+    @username = args[:username] || ENV['INTERFI_CAPITAL_USERNAME']
+    @password = args[:password]|| ENV['INTERFI_CAPITAL_PASSWORD']
     encode_authentication
   end
 
